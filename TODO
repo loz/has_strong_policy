@@ -1,0 +1,34 @@
+Stuff todo
+
+on :action do
+  ...
+end
+
+as :role do
+end
+
+supports :on in :as and vice-versa
+
+support
+
+secured_params :as => :roll
+
+possibly supply controller as :context for block evals?
+
+with_context do |ctx|
+  if ctx.foo?
+    ...
+  else
+    ...
+  end
+end
+
+perhaps rename stuff to
+
+has_strong_policy
+has_strong_policy :through => ClassName
+
+with
+policy_params to access
+
+possible better chain implementation so add abritrary policy chains in (to extend strong params with custom stuff)

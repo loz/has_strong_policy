@@ -1,18 +1,43 @@
 class SecuresParams::Policy
   def self.inherited(base)
-    base.instance_variable_set("@policy_set", PolicySet.new)
+    sets = {}
+    base.instance_variable_set("@scope_stack", [])
+    base.instance_variable_set("@policy_sets", sets)
+    sets[[]] = SecuresParams::PolicyDefinition.new
+  end
+
+  def self.scoped_policy(scope)
+    @policy_sets[scope]
   end
 
   def self.required(required)
-    @policy_set.required(required)
+    scoped_policy(@scope_stack).required(required)
   end
 
   def self.permitted(*keys)
-    @policy_set.permitted(*keys)
+    scoped_policy(@scope_stack).permitted(*keys)
   end
 
   def self.apply_policy(params)
-    @policy_set.apply(params)
+    scope = []
+    scope << {:action => params[:action]} if params[:action]
+    policy = scoped_policy(scope) || scoped_policy([])
+    policy.apply(params)
+  end
+
+  def self.on(action)
+    current_policy = scoped_policy(@scope_stack)
+    @scope_stack = @scope_stack + [{:action => action}]
+    @policy_sets[@scope_stack] ||= inherit_definition(current_policy)
+    yield
+    @scope_stack = @scope_stack[0..-2]
+  end
+
+  def self.inherit_definition(current)
+    SecuresParams::PolicyDefinition.new.tap do |pd|
+      pd.required current.get_required
+      pd.permitted current.get_permitted.dup
+    end
   end
 
   def initialize(params)
@@ -23,25 +48,4 @@ class SecuresParams::Policy
     self.class.apply_policy(@params)
   end
 
-  class PolicySet
-    def initialize
-      @required = nil
-      @permitted = []
-    end
-
-    def required(required)
-      @required = required
-    end
-
-    def permitted(*keys)
-      @permitted = keys
-    end
-
-    def apply(params)
-      applied = params
-      applied = applied.require(@required) if @required
-      applied = applied.permit(*@permitted) if @permitted
-      applied
-    end
-  end
 end
