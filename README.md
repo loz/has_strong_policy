@@ -1,6 +1,6 @@
 # SecuresParams
 
-TODO: Write a gem description
+Simple delegation for your strong paramters
 
 ## Installation
 
@@ -18,7 +18,40 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+This gem provides a simple delgation framework for controllers and similar for
+using strong parameters in rails.  This allows:
+
+* Shared policy to be applied for multiple similar models (eg. STI)
+* Shared policy for the same model in different contexts (e.g. APIs)
+* More expressive declaration of paramter securing policies
+
+### Connecting your controller
+
+To use SecuresParams in your rails controller, simply include it, and turn it on:
+
+    class UserController < ApplicationController
+      include SecuresParams::ControllerHelper
+
+      secures_params
+    end
+
+This will provider automatic delgation to a conventionally named ParamsSecurer,
+in this case this would be the UserParamsSecurer.
+
+To access the params, simply use the `secured_params` helper, and you'll receive
+a clean param hash with all the policy already applied to strong params
+
+You can specify a specifc class to delegate security to by providing `:using`:
+
+    class SettingsController < ApplicationController
+      include SecuresParams::ControllerHelper
+
+      secures_params :using => UserParamsSecurer
+    end
+
+### Defining your securing policy
+
+WIP
 
 ## Contributing
 

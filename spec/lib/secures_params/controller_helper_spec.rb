@@ -14,6 +14,7 @@ module SecuresParams
 
   class XYZController < ExampleController; end
   class XYZParamsSecurer; end
+  class FooParamsSecurer; end
 
   describe ControllerHelper do
 
@@ -25,6 +26,16 @@ module SecuresParams
         subject.should_not respond_to :secured_params
         klass.secures_params
         subject.should respond_to :secured_params
+      end
+
+      context "when provided :using => " do
+        before :each do
+          klass.secures_params :using => FooParamsSecurer
+        end
+
+        it "uses named constant as the securing class" do
+          klass.securing_class.should == FooParamsSecurer
+        end
       end
     end
 

@@ -6,8 +6,9 @@ module SecuresParams::ControllerHelper
   end
 
   module ClassMethods
-    def secures_params
+    def secures_params(options = {})
       include SecuresParams::ControllerHelper::HasSecuresParams
+      @_securing_class = options[:using]
     end
   end
 
@@ -22,8 +23,9 @@ module SecuresParams::ControllerHelper
 
     module ClassMethods
       def securing_class
+        return @_securing_class if @_securing_class
         name = self.name.gsub(/Controller/, '') + 'ParamsSecurer'
-        name.constantize
+        @_securing_class = name.constantize
       end
     end
 
