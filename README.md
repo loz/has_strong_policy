@@ -51,7 +51,28 @@ You can specify a specifc class to delegate security to by providing `:using`:
 
 ### Defining your securing policy
 
-WIP
+You can a plain old ruby object for your policy object, or use the given policy
+definition class to build expressive rulesets.
+
+#### Simple Ruby Interface
+
+Your ruby class should be named conventionally (unless you explicitly specify
+with `:using`.  The object simply needs to respond to `:secured` taking the
+rails params and an options hash.
+
+    class UserParamsSecurer
+      def secured(params, options)
+        acceptable = [:email, :name]
+        if options[:role] == :admin
+          acceptable << :is_admin
+        end
+        params.require(:user).permit(acceptable)
+      end
+    end
+
+#### Using the Policy class and DSL:
+
+
 
 ## Contributing
 

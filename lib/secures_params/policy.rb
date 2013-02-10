@@ -40,12 +40,8 @@ class SecuresParams::Policy
     end
   end
 
-  def initialize(params)
-    @params = params
-  end
-
-  def secured
-    self.class.apply_policy(@params)
+  def secured(params)
+    self.class.apply_policy(params)
   end
 
 end

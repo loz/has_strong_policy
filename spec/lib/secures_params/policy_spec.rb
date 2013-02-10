@@ -25,7 +25,7 @@ module SecuresParams
     end
 
     let(:klass) { ExamplePolicy.dup }
-    subject { klass.new params }
+    subject { klass.new }
 
     it "has unique policy for each subclass" do
       klass1 = ExamplePolicy.dup
@@ -33,10 +33,10 @@ module SecuresParams
       klass1.required :user
       klass2.required :foo
 
-      first = klass1.new(params)
-      second = klass2.new(params)
+      first = klass1.new
+      second = klass2.new
 
-      first.secured.to_hash.should_not == second.secured.to_hash
+      first.secured(params).to_hash.should_not == second.secured(params).to_hash
     end
 
     describe "Defining default policy" do
@@ -49,7 +49,7 @@ module SecuresParams
       end
 
       it "is applied to result set" do
-        secured = subject.secured
+        secured = subject.secured(params)
         secured.to_hash.should == {
           :name => 'Joe Bloggs',
           :age => 21,
@@ -74,19 +74,19 @@ module SecuresParams
         end
 
         it "is applied when action is in params" do
-          secured = subject.secured
+          secured = subject.secured(params)
           secured[:email].should == 'joe@bloggs.com'
         end
 
         it "inherits prior conditions" do
-          secured = subject.secured
+          secured = subject.secured(params)
           secured[:name].should == 'Joe Bloggs'
           secured[:phone].should == '12345'
         end
 
         it "does not apply when action does not match" do
           params[:action] = :foo
-          secured = subject.secured
+          secured = subject.secured(params)
 
           secured[:email].should be_nil
         end
