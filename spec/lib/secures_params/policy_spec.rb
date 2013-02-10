@@ -66,8 +66,8 @@ module SecuresParams
             required :user
             permitted :name, :age, :phone
 
-            on :create do
-              permitted :email
+            on :create do |d|
+              d.permitted :email
             end
           end
           params[:action] = :create
@@ -78,6 +78,7 @@ module SecuresParams
           secured[:email].should == 'joe@bloggs.com'
         end
 
+        #This not working causes failure above too :(
         it "inherits prior conditions" do
           secured = subject.secured(params)
           secured[:name].should == 'Joe Bloggs'
