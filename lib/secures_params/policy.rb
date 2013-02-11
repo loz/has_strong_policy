@@ -9,18 +9,8 @@ class SecuresParams::Policy
     end
   end
 
-  def self.required(required)
-    policy_set.with_condition({}).required(required)
-  end
-
-  def self.permitted(*keys)
-    policy_set.with_condition({}).permitted(*keys)
-  end
-
-  def self.on(action)
-    policy_set.with_condition({:action => action}) do |definition|
-      yield definition
-    end
+  def self.policy(&block)
+    policy_set.with_condition({},nil,&block)
   end
 
   def secured(params)

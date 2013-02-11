@@ -5,8 +5,9 @@ class SecuresParams::PolicySet
     end
   end
 
-  def with_condition(condition)
+  def with_condition(condition, parent = nil)
     d = @definitions[condition]
+    d.extend_from(parent) if parent
     proxy = Proxy.new(condition, self, d)
     yield proxy if block_given?
     proxy
@@ -33,8 +34,14 @@ class SecuresParams::PolicySet
       definition.permitted(*args)
     end
 
+    def on(action)
+      with_condition({:action => action}) do |definition|
+        yield definition
+      end
+    end
+
     def with_condition(condition, &block)
-     set.with_condition(conditions.merge(condition), &block)
+     set.with_condition(conditions.merge(condition), definition, &block)
     end
   end
 

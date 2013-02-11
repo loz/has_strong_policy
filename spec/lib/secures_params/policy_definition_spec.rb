@@ -30,4 +30,23 @@ describe SecuresParams::PolicyDefinition do
       subject.apply(params).should == :permitted
     end
   end
+
+  describe "extend_from" do
+    it "copies the directives of the target" do
+      target = described_class.new
+      target.required :foo
+      target.permitted :bar
+
+      subject.extend_from(target)
+      subject.permitted :baz
+
+      params = mock
+      required = mock
+
+      params.should_receive(:require).with(:foo).and_return(required)
+      required.should_receive(:permit).with(:bar, :baz).and_return(:extended)
+
+      subject.apply(params).should == :extended
+    end
+  end
 end

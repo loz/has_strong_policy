@@ -3,18 +3,15 @@ class SecuresParams::PolicyDefinition
     @required = required
   end
 
-  def get_required
-    @required
-  end
-
   def permitted(*keys)
     @permitted ||= []
     @permitted += keys
     @permitted.flatten!
   end
 
-  def get_permitted
-    @permitted
+  def extend_from(target)
+    @required = target.get_required
+    @permitted = target.get_permitted
   end
 
   def apply(params)
@@ -23,4 +20,15 @@ class SecuresParams::PolicyDefinition
     applied = applied.permit(*@permitted) if @permitted
     applied
   end
+
+  protected
+
+  def get_permitted
+    @permitted
+  end
+
+  def get_required
+    @required
+  end
+
 end

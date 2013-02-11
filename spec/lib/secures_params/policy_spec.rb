@@ -30,8 +30,12 @@ module SecuresParams
     it "has unique policy for each subclass" do
       klass1 = ExamplePolicy.dup
       klass2 = AnotherPolicy.dup
-      klass1.required :user
-      klass2.required :foo
+      klass1.policy do |p|
+        p.required :user
+      end
+      klass2.policy do |p|
+        p.required :foo
+      end
 
       first = klass1.new
       second = klass2.new
@@ -42,9 +46,9 @@ module SecuresParams
     describe "Defining default policy" do
 
       before :each do
-        klass.instance_eval do
-          required :user
-          permitted :name, :age, :phone
+        klass.policy do |p|
+          p.required :user
+          p.permitted :name, :age, :phone
         end
       end
 
@@ -62,11 +66,11 @@ module SecuresParams
     describe "Conditional Policies" do
       describe "on" do
         before :each do
-          klass.instance_eval do
-            required :user
-            permitted :name, :age, :phone
+          klass.policy do |p|
+            p.required :user
+            p.permitted :name, :age, :phone
 
-            on :create do |d|
+            p.on :create do |d|
               d.permitted :email
             end
           end
