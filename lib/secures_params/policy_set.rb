@@ -40,6 +40,12 @@ class SecuresParams::PolicySet
       end
     end
 
+    def as(role)
+      with_condition({:as => role}) do |definition|
+        yield definition
+      end
+    end
+
     def with_condition(condition, &block)
      set.with_condition(conditions.merge(condition), definition, &block)
     end

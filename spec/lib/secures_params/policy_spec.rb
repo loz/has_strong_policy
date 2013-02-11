@@ -96,6 +96,24 @@ module SecuresParams
           secured[:email].should be_nil
         end
       end
+
+      describe "as" do
+        before :each do
+          klass.policy do |p|
+            p.required :user
+            p.permitted :name, :age, :phone
+
+            p.as :admin do |d|
+              d.permitted :role
+            end
+          end
+        end
+
+        it "is applied when an :as => :role option is supplied" do
+          secured = subject.secured(params, :as => :admin)
+          secured[:role].should == 'admin'
+        end
+      end
     end
   end
 end

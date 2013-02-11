@@ -14,7 +14,7 @@ class SecuresParams::PolicyDefinition
     @permitted = target.get_permitted
   end
 
-  def apply(params)
+  def apply(params, options = {})
     applied = params
     applied = applied.require(@required) if @required
     applied = applied.permit(*@permitted) if @permitted
