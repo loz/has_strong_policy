@@ -72,7 +72,23 @@ rails params and an options hash.
 
 #### Using the Policy class and DSL:
 
+Secures Params provides a DSL based policy class which allows succinct definition
+of policies for defaults, specific actions or older accesible :as style roles:
 
+    class UserParamsSecurer < SecuresParams::Policy
+      policy do |p|
+        p.required :user
+        p.permitted :first_name, :last_name, :dob
+
+        p.on :create do |p|
+          p.permitted :email
+
+          p.as :admin do |p|
+            p.permitted :is_admin
+          end
+        end
+      end
+    end
 
 ## Contributing
 
