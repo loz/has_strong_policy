@@ -36,6 +36,7 @@ To use SecuresParams in your rails controller, simply include it, and turn it on
 
       secures_params
     end
+    ```
 
 This will provider automatic delgation to a conventionally named ParamsSecurer,
 in this case this would be the UserParamsSecurer.
@@ -52,6 +53,7 @@ You can specify a specifc class to delegate security to by providing `:using`:
 
       secures_params :using => UserParamsSecurer
     end
+    ```
 
 #### Requesting the Params
 
@@ -60,6 +62,7 @@ place of regular `params`.  You can also supply options, like so:
 
     ```ruby
     User.new(secured_params(:as => :admin))
+    ```
 
 ### Defining your securing policy
 
@@ -83,6 +86,7 @@ rails params and an options hash.
         params.require(:user).permit(acceptable)
       end
     end
+    ```
 
 #### Using the Policy class and DSL:
 
@@ -104,6 +108,7 @@ of policies for defaults, specific actions or older accesible :as style roles:
         end
       end
     end
+    ```
 
 Sub definitions inherit the policy from prior ones.  So in the above case, user
 has name and dob permitted, but in the create action they can also set email.
