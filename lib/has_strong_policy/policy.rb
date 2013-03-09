@@ -1,7 +1,7 @@
-class SecuresParams::Policy
+class HasStrongPolicy::Policy
   def self.inherited(base)
     base.instance_eval do
-      @policy_set = SecuresParams::PolicySet.new
+      @policy_set = HasStrongPolicy::PolicySet.new
 
       def policy_set
         @policy_set
@@ -13,7 +13,7 @@ class SecuresParams::Policy
     policy_set.with_condition({},nil,&block)
   end
 
-  def secured(params, options = {})
+  def apply(params, options = {})
     conditions = build_conditions(params, options)
     self.class.policy_set.with_condition(conditions).apply(params, options)
   end

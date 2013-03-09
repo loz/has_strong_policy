@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SecuresParams::PolicyDefinition do
+describe HasStrongPolicy::PolicyDefinition do
   describe "required" do
     it "adds a required constraint to be applied" do
       subject.required :foo

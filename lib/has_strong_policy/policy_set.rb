@@ -1,7 +1,7 @@
-class SecuresParams::PolicySet
+class HasStrongPolicy::PolicySet
   def initialize
     @definitions = Hash.new do |h,k|
-      h[k] = SecuresParams::PolicyDefinition.new
+      h[k] = HasStrongPolicy::PolicyDefinition.new
     end
   end
 

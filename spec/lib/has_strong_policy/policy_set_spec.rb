@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module SecuresParams
+module HasStrongPolicy
   describe PolicySet do
     describe "#with_condition" do
       it "returns the definition for given condition" do

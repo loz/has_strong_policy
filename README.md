@@ -1,4 +1,4 @@
-# SecuresParams
+# HasStrongPolicy
 
 Simple delegation for your strong paramters
 
@@ -6,7 +6,7 @@ Simple delegation for your strong paramters
 
 Add this line to your application's Gemfile:
 
-    gem 'secures_params'
+    gem 'has_strong_policy'
 
 And then execute:
 
@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install secures_params
+    $ gem install has_strong_policy
 
 ## Usage
 
@@ -27,21 +27,21 @@ using strong parameters in rails.  This allows:
 
 ### Connecting your controller
 
-To use SecuresParams in your rails controller, simply include it, and turn it on:
+To use HasStrongPolicy in your rails controller, simply include it, and turn it on:
 
 
 ```ruby
 class UserController < ApplicationController
-  include SecuresParams::ControllerHelper
+  include HasStrongPolicy::ControllerHelper
 
-  secures_params
+  has_strong_policy
 end
 ```
 
 This will provider automatic delgation to a conventionally named ParamsSecurer,
-in this case this would be the UserParamsSecurer.
+in this case this would be the UserParamsPolicy.
 
-To access the params, simply use the `secured_params` helper, and you'll receive
+To access the params, simply use the `policy_params` helper, and you'll receive
 a clean param hash with all the policy already applied to strong params
 
 You can specify a specifc class to delegate security to by providing `:using`:
@@ -49,19 +49,19 @@ You can specify a specifc class to delegate security to by providing `:using`:
 
 ```ruby
 class SettingsController < ApplicationController
-  include SecuresParams::ControllerHelper
+  include HasStrongPolicy::ControllerHelper
 
-  secures_params :using => UserParamsSecurer
+  has_strong_policy :using => UserParamsPolicy
 end
 ```
 
 #### Requesting the Params
 
-You request the params secured through the policy using `secured_params` in
+You request the params filtered through the policy using `policy_params` in
 place of regular `params`.  You can also supply options, like so:
 
 ```ruby
-User.new(secured_params(:as => :admin))
+User.new(policy_params(:as => :admin))
 ```
 
 ### Defining your securing policy
@@ -72,12 +72,12 @@ definition class to build expressive rulesets.
 #### Simple Ruby Interface
 
 Your ruby class should be named conventionally (unless you explicitly specify
-with `:using`.  The object simply needs to respond to `:secured` taking the
+with `:using`.  The object simply needs to respond to `:apply` taking the
 rails params and an options hash.
 
 ```ruby
 class UserParamsSecurer
-  def secured(params, options)
+  def apply(params, options)
     acceptable = [:email, :name]
     if options[:role] == :admin
       acceptable << :is_admin
@@ -93,7 +93,7 @@ Secures Params provides a DSL based policy class which allows succinct definitio
 of policies for defaults, specific actions or older accesible :as style roles:
 
 ```ruby
-class UserParamsSecurer < SecuresParams::Policy
+class UserParamsPolicy < HasStrongPolicy::Policy
   policy do |p|
     p.required :user
     p.permitted :first_name, :last_name, :dob

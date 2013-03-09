@@ -1,4 +1,4 @@
-class SecuresParams::PolicyDefinition
+class HasStrongPolicy::PolicyDefinition
   def required(required)
     @required = required
   end

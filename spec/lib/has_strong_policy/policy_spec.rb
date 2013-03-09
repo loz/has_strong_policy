@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module SecuresParams
+module HasStrongPolicy
 
   class ExamplePolicy < Policy
   end
@@ -40,7 +40,7 @@ module SecuresParams
       first = klass1.new
       second = klass2.new
 
-      first.secured(params).to_hash.should_not == second.secured(params).to_hash
+      first.apply(params).to_hash.should_not == second.apply(params).to_hash
     end
 
     describe "Defining default policy" do
@@ -53,13 +53,13 @@ module SecuresParams
       end
 
       it "is applied to result set" do
-        secured = subject.secured(params)
-        secured.to_hash.should == {
+        applied = subject.apply(params)
+        applied.to_hash.should == {
           :name => 'Joe Bloggs',
           :age => 21,
           :phone => '12345'
         }
-        secured.should be_permitted
+        applied.should be_permitted
       end
     end
 
@@ -78,22 +78,22 @@ module SecuresParams
         end
 
         it "is applied when action is in params" do
-          secured = subject.secured(params)
-          secured[:email].should == 'joe@bloggs.com'
+          applied = subject.apply(params)
+          applied[:email].should == 'joe@bloggs.com'
         end
 
         #This not working causes failure above too :(
         it "inherits prior conditions" do
-          secured = subject.secured(params)
-          secured[:name].should == 'Joe Bloggs'
-          secured[:phone].should == '12345'
+          applied = subject.apply(params)
+          applied[:name].should == 'Joe Bloggs'
+          applied[:phone].should == '12345'
         end
 
         it "does not apply when action does not match" do
           params[:action] = :foo
-          secured = subject.secured(params)
+          applied = subject.apply(params)
 
-          secured[:email].should be_nil
+          applied[:email].should be_nil
         end
       end
 
@@ -110,8 +110,8 @@ module SecuresParams
         end
 
         it "is applied when an :as => :role option is supplied" do
-          secured = subject.secured(params, :as => :admin)
-          secured[:role].should == 'admin'
+          applied = subject.apply(params, :as => :admin)
+          applied[:role].should == 'admin'
         end
       end
     end

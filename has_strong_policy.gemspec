@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'secures_params/version'
+require 'has_strong_policy/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "secures_params"
-  gem.version       = SecuresParams::VERSION
+  gem.name          = "has_strong_policy"
+  gem.version       = HasStrongPolicy::VERSION
   gem.authors       = ["Jonathan Lozinski"]
   gem.email         = ["jonathan.lozinski@gmail.com"]
   gem.description   = %q{Simple params policy delegation for rails}
