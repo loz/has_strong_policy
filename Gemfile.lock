@@ -34,6 +34,7 @@ GEM
       method_source (~> 0.8)
       slop (~> 3.3.1)
     rainbow (1.1.4)
+    rake (10.0.3)
     rb-fsevent (0.9.3)
     rspec (2.12.0)
       rspec-core (~> 2.12.0)
@@ -57,6 +58,7 @@ DEPENDENCIES
   fudge
   guard-rspec
   has_strong_policy!
+  rake
   rb-fsevent
   rspec
   simplecov
