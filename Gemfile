@@ -4,6 +4,8 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
+  gem 'simplecov'
+  gem 'fudge'
   gem 'rspec'
   gem 'rb-fsevent'
   gem 'guard-rspec'

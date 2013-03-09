@@ -4,6 +4,9 @@
 # loaded once.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'simplecov'
+SimpleCov.start
+
 require 'has_strong_policy'
 
 require File.expand_path("../support/mock_strong_params", __FILE__)
