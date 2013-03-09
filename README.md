@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/loz/has_strong_policy.png)](https://travis-ci.org/loz/has_strong_policy)
 [![Code Climate](https://codeclimate.com/github/loz/has_strong_policy.png)](https://codeclimate.com/github/loz/has_strong_policy)
+[![Dependency Status](https://gemnasium.com/loz/has_strong_policy.png)](https://gemnasium.com/loz/has_strong_policy)
 
 # HasStrongPolicy
 
