@@ -1,16 +1,7 @@
 TODO
 
-[ ] - Support: secured_params :as => :roll
 [ ] - possibly supply controller as :context for block evals?
 [ ] - nesting: p.secures :nested_attribute [, :using => :nested]
-
-perhaps rename stuff to
-
-has_strong_policy
-has_strong_policy :through => ClassName
-
-with
-policy_params to access
 
 Context stuff.. (passing controller for additional flexibility)
 
