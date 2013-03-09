@@ -40,7 +40,7 @@ class UserController < ApplicationController
 end
 ```
 
-This will provider automatic delgation to a conventionally named ParamsSecurer,
+This will provider automatic delgation to a conventionally named ParamsPolicy,
 in this case this would be the UserParamsPolicy.
 
 To access the params, simply use the `policy_params` helper, and you'll receive
@@ -78,7 +78,7 @@ with `:using`.  The object simply needs to respond to `:apply` taking the
 rails params and an options hash.
 
 ```ruby
-class UserParamsSecurer
+class UserParamsPolicy
   def apply(params, options)
     acceptable = [:email, :name]
     if options[:role] == :admin
