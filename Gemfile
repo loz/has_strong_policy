@@ -7,8 +7,11 @@ gem 'rake'
 
 group :development, :test do
   gem 'simplecov'
-  gem 'fudge'
+  gem 'fudge', :git => 'git@github.com:Sage/fudge.git'
   gem 'rspec'
+  gem 'flay'
+  gem 'ruby2ruby'
+  gem 'flog'
   gem 'rb-fsevent'
   gem 'guard-rspec'
 end

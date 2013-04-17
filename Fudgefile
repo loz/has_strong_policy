@@ -1,3 +1,5 @@
 build :default do
+  task :flog, :exclude => 'spec/'
+  task :flay, :exclude => 'spec/'
   task :rspec, :coverage => 100
 end
