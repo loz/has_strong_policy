@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:Sage/fudge.git
+  remote: https://github.com/Sage/fudge.git
   revision: 7bbe596387987b101dad8b3fca3ce451458c93e6
   specs:
     fudge (0.0.5)
